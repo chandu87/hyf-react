@@ -1,28 +1,16 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
+.gits-list {
+  border: 1px dashed black;
   padding: 20px;
-  color: white;
+  margin: 30px 0;
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.App-title {
-  font-size: 1.5em;
+.gits-list .git {
+  margin: 10px;
+  border: 10px solid black;
 }
 
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.gits-list .git img {
+  max-width: 50vh;
 }
