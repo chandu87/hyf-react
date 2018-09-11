@@ -7,7 +7,8 @@ class GithubList extends React.Component {
       <div className="gits-list">
           {githubData.map(gits => (
             <div className="git">
-            <li>{gits.html_url}</li>
+            <h4>{gits.login}</h4>
+            <p>Link : <a href={gits.html_url}>{gits.html_url}</a></p>
             <img  src={gits.avatar_url}/> 
             </div>
           ))}
