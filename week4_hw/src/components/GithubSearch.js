@@ -1,33 +1,41 @@
 import React from 'react';
 import {fetchGithub, fetchGithubUser} from '../api';
+import GithubUserList from './GithubUserList';
 
 
 class GithubSearch extends React.Component{
     constructor(props) {
         super(props);
-        this.state = { searchKeyword: "", githubUserData: [] };
+        this.state = { searchKeyword: "jhon", githubUserData: [], githubUserLocations : [] };
         this.search = this.search.bind(this);
       }
     search(){
-        console.log("serach function invoked");
-        // fetchGithub("chandu").then((data)=>{
-        //     console.log(data);
-        // });
-        fetchGithubUser("chandu87").then((data)=>{
-            this.setState({githubUserData : data});
-            console.log(this.state.githubUserData);
+        fetchGithub(this.state.searchKeyword).then((data)=>{
+            this.state.githubUserData = data.items.map((item)=>{
+                return item.login;
+            });
+            let temp = [];
+            this.state.githubUserData.forEach((user)=>{
+                fetchGithubUser(user).then((data)=>{
+                    temp.push(data);
+                    this.setState({githubUserLocations : temp});
+                    }); 
+            });
+            console.log(this.state.githubUserLocations);
         });
     }
     render(){
+        const {searchKeyword, githubUserLocations} = this.state;
         return (
         <div>
+            <input type="text" placeholder="Enter User name" onChange={e => {
+              this.setState({ searchKeyword: e.target.value });
+            }}
+            value={searchKeyword}/>
             <button onClick={this.search}>Submit</button>
-            <p>{this.state.githubUserData.login}</p>
-            <p>{this.state.githubUserData.location}</p>
-
+            <GithubUserList githubData = {githubUserLocations}/>
         </div>
         );
     }
 }
-
 export default GithubSearch;
