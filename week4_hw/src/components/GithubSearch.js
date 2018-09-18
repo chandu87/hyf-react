@@ -1,13 +1,15 @@
 import React from 'react';
-import {fetchGithub, fetchGithubUser} from '../api';
+import {fetchGithub, fetchGithubUser, fetchHyfRepos} from '../api';
 import GithubUserList from './GithubUserList';
+import HyfRepos from './HyfRepos';
 
 
 class GithubSearch extends React.Component{
     constructor(props) {
         super(props);
-        this.state = { searchKeyword: "jhon", githubUserData: [], githubUserLocations : [] };
+        this.state = { searchKeyword: "jhon", githubUserLocations : [] , hyfData : []};
         this.search = this.search.bind(this);
+        this.findHyfReposList = this.findHyfReposList.bind(this);
       }
     search(){
         fetchGithub(this.state.searchKeyword).then((data)=>{
@@ -24,8 +26,13 @@ class GithubSearch extends React.Component{
             console.log(this.state.githubUserLocations);
         });
     }
+    findHyfReposList(){
+        fetchHyfRepos().then((data)=>{
+            this.setState({hyfData : data});
+        });
+    }
     render(){
-        const {searchKeyword, githubUserLocations} = this.state;
+        const {searchKeyword, githubUserLocations, hyfData} = this.state;
         return (
         <div>
             <input type="text" placeholder="Enter User name" onChange={e => {
@@ -34,6 +41,9 @@ class GithubSearch extends React.Component{
             value={searchKeyword}/>
             <button onClick={this.search}>Submit</button>
             <GithubUserList githubData = {githubUserLocations}/>
+            <button onClick={this.findHyfReposList}>Hyf Repos</button>
+            <HyfRepos hyfData = {hyfData}/>
+
         </div>
         );
     }

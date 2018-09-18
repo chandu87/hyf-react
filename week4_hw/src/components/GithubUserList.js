@@ -7,9 +7,9 @@ render(){
       <div className="gits-list">
           {githubData.map(gits => (
             <div className="git">
-            <h4>{gits.login}</h4>
+            <h4>Name : {gits.login}</h4>
             <p>Link : <a href={gits.html_url}>{gits.html_url}</a></p>
-            <p>{gits.location}</p> 
+            <p>Location : {gits.location}</p> 
             </div>
           ))}
       </div>
